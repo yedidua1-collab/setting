@@ -1,2 +1,4 @@
 node_modules/
 .wrangler/
+design/video/*.mp4
+design/video/out/
