@@ -1,0 +1,11 @@
+// Cloudflare Worker config. Used by Workers Builds (auto-deploy on push to main)
+// and by `npx wrangler deploy`. Build step: `node build.mjs` (generates worker/assets.js).
+{
+  "name": "setting-site",
+  "main": "worker/worker.js",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "d1_databases": [
+    { "binding": "DB", "database_name": "setting-leads", "database_id": "0bfeed9a-fad5-4b71-9cd4-d4cd5f39a0f4" }
+  ]
+}

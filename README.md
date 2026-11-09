@@ -10,7 +10,11 @@ Live: https://setting-site.yedidua1.workers.dev (Cloudflare Worker `setting-site
 - `deploy.sh` – build + upload the Worker (with the D1 binding).
 - `db/schema.sql` – the leads table.
 
-To update the site: edit `page.html` (or images), then `./deploy.sh`.
+## Deploying
+- **Automatic:** Workers Builds (Cloudflare dashboard → Workers & Pages → setting-site → Settings → Builds) is connected to this repo. Every push to `main` runs build command `node build.mjs`, then deploy command `npx wrangler deploy` (config in `wrangler.jsonc`).
+- **Manual (fallback):** `./deploy.sh` uploads straight through the Cloudflare API. A later push to `main` overwrites it, so commit and push manual changes too.
+
+To update the site: edit `page.html` (or images), commit, push to `main`.
 
 ## Leads
 Each form submission is:
