@@ -25,5 +25,5 @@ curl -sS -X POST "https://api.cloudflare.com/client/v4/accounts/9bedd28fad9d3aa1
   -H 'content-type: application/json' -d '{"sql":"SELECT * FROM leads WHERE status = '\''new'\'' ORDER BY created_at DESC"}'
 ```
 
-## Still open
-- Portfolio: 3 screenshots + links (placeholders in `page.html`).
+## Portfolio
+Two works: פה שבת? (po-shabbat.netlify.app) and Setting itself. מערכת שי (shaipsy.com) is NOT shown until its official launch — Yedidya's decision 2026-11-09. Then add a third card and set `.works` back to 3 columns.
