@@ -522,6 +522,7 @@ a{color:inherit}
 <script>
 /* ===== הגדרות – להחליף לפני העלייה לאוויר ===== */
 const WHATSAPP_NUMBER = "972527732544"; // המספר שלך בפורמט בינלאומי, בלי + ובלי 0 בהתחלה
+const LEAD_EMAIL = "yedidua1@gmail.com"; // פניות מהטופס נשלחות לכאן (FormSubmit)
 const WHATSAPP_TEXT = "היי ידידיה, הגעתי מהאתר של Setting ואשמח לשמוע פרטים על חבילת דף בית למטפל";
 /* ============================================== */
 
@@ -568,6 +569,18 @@ if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: re
 }
 
 // lead form
+function sendLeadEmail(id, name, phone, area) {
+  const digits = phone.replace(/\D/g, "").replace(/^0/, "");
+  fetch("https://formsubmit.co/ajax/" + LEAD_EMAIL, {
+    method: "POST",
+    headers: { "content-type": "application/json", accept: "application/json" },
+    body: JSON.stringify({ _subject: "פנייה חדשה מהאתר: " + name, _template: "table", _captcha: "false",
+      "שם": name, "טלפון": phone, "תחום טיפול": area || "—", "וואטסאפ": "https://wa.me/972" + digits })
+  })
+    .then(r => r.json().then(b => ({ ok: r.ok && String(b.success) === "true", error: r.status + " " + (b.message || "") })))
+    .catch(e => ({ ok: false, error: "fetch: " + e }))
+    .then(r => { if (id) fetch("/api/lead/" + id + "/email", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(r), keepalive: true }).catch(() => {}); });
+}
 const form = document.getElementById("leadForm");
 form.addEventListener("submit", async e => {
   e.preventDefault();
@@ -595,6 +608,7 @@ form.addEventListener("submit", async e => {
     });
     const out = await res.json().catch(() => ({}));
     if (!res.ok || !out.ok) throw new Error("send failed");
+    sendLeadEmail(out.id, name, phone, area);
     const first = name.split(/\s+/)[0];
     document.getElementById("thanksTitle").textContent = "תודה " + first + ", הפרטים התקבלו";
     form.hidden = true;

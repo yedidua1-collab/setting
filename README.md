@@ -15,7 +15,7 @@ To update the site: edit `page.html` (or images), then `./deploy.sh`.
 ## Leads
 Each form submission is:
 1. Saved in D1 database `setting-leads` (id 0bfeed9a-fad5-4b71-9cd4-d4cd5f39a0f4), table `leads`.
-2. Emailed to yedidua1@gmail.com via FormSubmit (`email_sent` = 1 when it went through).
+2. Emailed to yedidua1@gmail.com via FormSubmit. The visitor's browser sends the email (FormSubmit rate-limits Cloudflare Workers' shared IPs with 429), then reports the result to `POST /api/lead/:id/email`, which sets `email_sent` / `email_error`. Address is `LEAD_EMAIL` in `page.html`.
 
 `status` values: new / contacted / call_scheduled / won / lost. `notes` is free text.
 

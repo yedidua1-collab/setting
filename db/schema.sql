@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS leads (
   status TEXT NOT NULL DEFAULT 'new',   -- new / contacted / call_scheduled / won / lost
   notes TEXT,
   email_sent INTEGER NOT NULL DEFAULT 0,
+  email_error TEXT,
   user_agent TEXT,
   country TEXT
 );
