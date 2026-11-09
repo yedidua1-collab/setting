@@ -148,7 +148,7 @@ a{color:inherit}
 /* About */
 .about{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(32px,6vw,88px);align-items:center}
 .about-photo{aspect-ratio:4/5;max-width:100%;border-radius:200px 200px 22px 22px;background:linear-gradient(170deg,var(--sage-soft),#C9D6CE);position:relative;overflow:hidden;display:grid;place-items:center;color:var(--sage-deep);text-align:center;font-size:.95rem}
-.about-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.about-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%}
 .about-photo .ph{display:grid;gap:8px;justify-items:center;padding:20px;opacity:.85}
 .about-photo .ph svg{width:44px;height:44px}
 .about-copy{display:grid;gap:22px;min-width:0}
@@ -343,12 +343,7 @@ a{color:inherit}
   <section class="band" id="about">
     <div class="wrap about">
       <div class="about-photo reveal">
-        <!-- להחלפה: הכנס כאן את התמונה שלך, למשל:
-             <img src="images/yedidya.jpg" alt="ידידיה, המייסד של Setting"> -->
-        <div class="ph">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="9" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
-          <span>מקום לתמונה שלך</span>
-        </div>
+        <img src="images/yedidya.jpg" alt="ידידיה, המייסד של Setting" width="640" height="800">
       </div>
       <div class="about-copy reveal">
         <span class="eyebrow">נעים להכיר</span>
@@ -522,7 +517,7 @@ a{color:inherit}
 
 <script>
 /* ===== הגדרות – להחליף לפני העלייה לאוויר ===== */
-const WHATSAPP_NUMBER = "972500000000"; // המספר שלך בפורמט בינלאומי, בלי + ובלי 0 בהתחלה
+const WHATSAPP_NUMBER = "972527732544"; // המספר שלך בפורמט בינלאומי, בלי + ובלי 0 בהתחלה
 const WHATSAPP_TEXT = "היי ידידיה, הגעתי מהאתר של Setting ואשמח לשמוע פרטים על חבילת דף בית למטפל";
 /* ============================================== */
 
