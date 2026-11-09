@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>שאלון היכרות – Setting</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FAF8F5">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Setting">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="שאלון היכרות והקמת &quot;דף בית למטפל&quot; | Setting">
+<meta property="og:description" content="כ-10–15 דקות, ואני כבר ניגש לעבודה על דף הבית שלך.">
+<meta property="og:image" content="https://setting-site.yedidua1.workers.dev/images/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%234A6B5D'/%3E%3Ctext x='29' y='46' font-family='Georgia,serif' font-size='40' fill='%23FAF8F5' text-anchor='middle'%3ES%3C/text%3E%3Ccircle cx='49' cy='43' r='4.5' fill='%23C87D65'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap">
+<style>
+/* Same visual language as the Setting homepage: cream page, white card, sage for action, terracotta for small accents. */
+:root{
+  --bg:#FAF8F5;--bg-2:#F2EFE9;--card:#FFFFFF;--border:#E6E1D6;
+  --sage:#4A6B5D;--sage-deep:#3B574B;--sage-soft:#DCE5DF;
+  --terra:#C87D65;--terra-soft:#F3E2DA;--ink:#2B302E;--ink-2:#5A625E;
+  --font-display:"Frank Ruhl Libre","David Libre","Times New Roman",serif;
+  --font-body:"Assistant","Heebo","Segoe UI",Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:1.08rem;line-height:1.7;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--font-display);font-weight:500;line-height:1.25;margin:0;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--terra);outline-offset:3px;border-radius:8px}
+.wrap{max-width:760px;margin-inline:auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+
+header{padding-block:22px}
+.head-row{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font-family:var(--font-display);font-size:1.6rem;font-weight:500;color:var(--sage);text-decoration:none;direction:ltr}
+.logo span{color:var(--terra)}
+.head-note{font-size:.92rem;color:var(--ink-2)}
+
+.intro{padding-block:18px 30px;display:grid;gap:16px}
+.eyebrow{font-size:.92rem;font-weight:600;color:var(--terra);display:inline-flex;align-items:center;gap:10px;letter-spacing:.03em}
+.eyebrow::before{content:"";width:22px;height:1.5px;background:currentColor}
+.intro h1{font-size:clamp(1.9rem,1.4rem + 2.2vw,2.8rem)}
+.intro p{color:var(--ink-2);font-size:1.1rem;max-width:40rem}
+
+/* progress */
+.progress{display:grid;gap:10px;margin-bottom:18px}
+.progress-bars{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.progress-bars i{height:6px;border-radius:6px;background:var(--border);position:relative;overflow:hidden}
+.progress-bars i::after{content:"";position:absolute;inset:0;background:var(--sage);transform:scaleX(0);transform-origin:right;transition:transform .45s ease}
+.progress-bars i.done::after{transform:scaleX(1)}
+.progress-label{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.95rem}
+.progress-label b{color:var(--sage);font-weight:700}
+.progress-label span{color:var(--ink-2)}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:24px;box-shadow:0 30px 60px -45px rgba(43,48,46,.35);padding:clamp(22px,4vw,40px)}
+.step{display:grid;gap:30px;animation:in .35s ease}
+@keyframes in{from{opacity:.001;transform:translateY(8px)}to{opacity:1;transform:none}}
+.step-title{display:grid;gap:4px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.step-title h2{font-size:1.55rem}
+.step-title p{color:var(--ink-2);font-size:.98rem;padding-bottom:16px}
+
+.q{display:grid;gap:10px}
+.q > label,.q > .q-label{font-weight:600;font-size:1.06rem;line-height:1.5;display:flex;gap:10px;align-items:baseline}
+.num{flex:none;font-family:var(--font-display);color:var(--terra);font-size:1.05rem;min-width:1.4em}
+.opt{font-weight:400;color:var(--ink-2);font-size:.9rem}
+.req{color:var(--terra)}
+.hint{font-size:.92rem;color:var(--ink-2);margin-top:-4px}
+input[type=text],input[type=tel],input[type=email],textarea{width:100%;font:400 1.05rem var(--font-body);color:var(--ink);background:var(--bg);border:1.5px solid var(--border);border-radius:14px;padding:13px 16px;transition:border-color .2s,background .2s;min-height:52px}
+textarea{min-height:140px;resize:vertical;line-height:1.65}
+input::placeholder,textarea::placeholder{color:#9AA19D}
+input:focus,textarea:focus{outline:none;border-color:var(--sage);background:#fff}
+[aria-invalid=true]{border-color:var(--terra)!important}
+.err{font-size:.9rem;color:#A85A43}
+
+/* choice cards */
+.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.choice{position:relative;display:flex;align-items:center;gap:12px;border:1.5px solid var(--border);border-radius:16px;padding:16px 18px;cursor:pointer;background:var(--bg);transition:border-color .2s,background .2s;min-height:58px}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+.choice .box{flex:none;width:22px;height:22px;border-radius:7px;border:1.5px solid #B9BFBB;background:#fff;display:grid;place-items:center;transition:all .2s}
+.choice.radio .box{border-radius:50%}
+.choice .box svg{width:14px;height:14px;color:#fff;opacity:0}
+.choice:has(input:checked){border-color:var(--sage);background:#fff;box-shadow:0 0 0 3px var(--sage-soft)}
+.choice:has(input:checked) .box{background:var(--sage);border-color:var(--sage)}
+.choice:has(input:checked) .box svg{opacity:1}
+.choice:has(input:focus-visible){outline:2px solid var(--terra);outline-offset:2px}
+.choice-text{display:grid;gap:8px;min-width:0}
+.choice-text b{font-weight:600}
+.swatches{display:flex;gap:6px}
+.swatches i{width:22px;height:22px;border-radius:50%;border:1px solid rgba(43,48,46,.14)}
+.mood .choice{align-items:flex-start}
+.mood .choice .box{margin-top:3px}
+
+/* uploads */
+.uploads{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.drop{position:relative;border:1.5px dashed #C9CFCB;border-radius:18px;background:var(--bg);min-height:170px;display:grid;place-items:center;text-align:center;padding:16px;cursor:pointer;transition:border-color .2s,background .2s}
+.drop:hover,.drop.over{border-color:var(--sage);background:#fff}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.drop .ph{display:grid;gap:6px;justify-items:center;color:var(--ink-2);font-size:.95rem;pointer-events:none}
+.drop .ph svg{width:30px;height:30px;color:var(--sage)}
+.drop .ph b{color:var(--ink);font-weight:600}
+.preview{display:grid;gap:10px;justify-items:center;width:100%}
+.preview img{max-width:100%;max-height:160px;border-radius:12px;object-fit:contain;background:#fff}
+.preview .meta{font-size:.85rem;color:var(--ink-2);display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center}
+.preview button{position:relative;z-index:2;font:600 .85rem var(--font-body);color:#A85A43;background:none;border:0;cursor:pointer;text-decoration:underline}
+
+/* nav */
+.nav{display:flex;gap:12px;justify-content:space-between;align-items:center;margin-top:34px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;font:600 1.02rem/1.2 var(--font-body);text-decoration:none;cursor:pointer;border:1.5px solid transparent;transition:background .2s,color .2s,border-color .2s,transform .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn[disabled]{opacity:.6;cursor:wait;transform:none}
+.btn-primary{background:var(--sage);color:#fff}
+.btn-primary:hover{background:var(--sage-deep)}
+.btn-ghost{background:transparent;color:var(--sage);border-color:var(--sage)}
+.btn-ghost:hover{background:var(--sage-soft)}
+.btn-terra{background:var(--terra);color:#fff}
+.btn svg{width:20px;height:20px;flex:none}
+.nav .spacer{flex:1}
+.save-note{font-size:.85rem;color:var(--ink-2);text-align:center;margin-top:16px}
+.send-err{margin-top:14px;font-size:.95rem;color:#A85A43;text-align:center}
+
+/* success */
+.done{text-align:center;display:grid;gap:18px;justify-items:center;padding-block:10px}
+.done-mark{width:76px;height:76px;border-radius:50%;background:var(--sage-soft);color:var(--sage);display:grid;place-items:center;animation:pop .5s ease}
+.done-mark svg{width:36px;height:36px}
+@keyframes pop{from{transform:scale(.6);opacity:.3}to{transform:none;opacity:1}}
+.done h2{font-size:1.9rem}
+.done p{color:var(--ink-2);max-width:32rem}
+.done-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+.copied{font-size:.9rem;color:var(--sage);min-height:1.4em}
+
+footer{padding-block:34px 44px;text-align:center;font-size:.9rem;color:var(--ink-2)}
+
+@media (max-width:560px){
+  .choices,.uploads{grid-template-columns:1fr}
+  .nav .btn{flex:1 1 auto}
+  .nav .spacer{display:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap head-row">
+    <a class="logo" href="/">Setting<span>.</span></a>
+    <span class="head-note">שאלון היכרות</span>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="intro" id="intro">
+    <span class="eyebrow">יוצאים לדרך</span>
+    <h1>שאלון היכרות והקמת "דף בית למטפל"</h1>
+    <p>היי! איזה כיף שיוצאים לדרך. כדי שאוכל לבנות עבורך דף בית רגוע ומדויק שמשקף את מי שאת, אשמח שתמלאי את השאלון הקצר הזה (לוקח כ-10–15 דקות). לא צריך לנסח הכול בצורה מושלמת – אני כאן כדי לערוך, ללטש ולהתאים את הטקסטים לשפה ולכללי האתיקה.</p>
+  </section>
+
+  <div class="progress" id="progress" aria-live="polite">
+    <div class="progress-bars" aria-hidden="true"><i class="done"></i><i></i><i></i></div>
+    <div class="progress-label"><b id="stepNum">שלב 1 מתוך 3</b><span id="stepName">פרטים בסיסיים ותחום טיפול</span></div>
+  </div>
+
+  <div class="card">
+    <form id="intake" novalidate>
+      <!-- Step 1 -->
+      <section class="step" data-step="1" data-name="פרטים בסיסיים ותחום טיפול">
+        <div class="step-title"><h2>פרטים בסיסיים ותחום טיפול</h2><p>כמה פרטים קצרים כדי להתחיל.</p></div>
+
+        <div class="q">
+          <label for="full_name"><span class="num">1.</span><span>שם מלא ותואר מקצועי כפי שיופיעו בראש הדף <span class="req">*</span></span></label>
+          <p class="hint" id="full_name_hint">לדוגמה: ד"ר מיכל כהן – פסיכולוגית קלינית מומחית / יעל לוי – פסיכותרפיסטית, MSW</p>
+          <input id="full_name" name="full_name" type="text" autocomplete="name" required aria-describedby="full_name_hint">
+          <span class="err" id="full_name_err" hidden>נא למלא שם ותואר</span>
+        </div>
+
+        <div class="q">
+          <label for="license"><span class="num">2.</span><span>מספר רישיון / הסמכה רלוונטית <span class="opt">(אופציונלי)</span></span></label>
+          <p class="hint" id="license_hint">לדוגמה: מספר רישיון בפנקס הפסיכולוגים (אם רלוונטי להצגה בדף)</p>
+          <input id="license" name="license" type="text" aria-describedby="license_hint">
+        </div>
+
+        <div class="q" role="group" aria-labelledby="loc_label">
+          <div class="q-label" id="loc_label"><span class="num">3.</span><span>איפה את מקבלת מטופלים?</span></div>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" name="locations" value="קליניקה פרונטלית" id="loc_clinic"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4.5 4.5L19 7"/></svg></span><span class="choice-text"><b>קליניקה פרונטלית</b></span></label>
+            <label class="choice"><input type="checkbox" name="locations" value="אונליין (זום)" id="loc_online"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4.5 4.5L19 7"/></svg></span><span class="choice-text"><b>אונליין (זום)</b></span></label>
+          </div>
+        </div>
+
+        <div class="q" id="city_q" hidden>
+          <label for="city"><span class="num">4.</span><span>באיזו עיר/שכונה נמצאת הקליניקה?</span></label>
+          <input id="city" name="city" type="text" autocomplete="address-level2">
+        </div>
+
+        <div class="q">
+          <label for="audience"><span class="num" id="audience_num">5.</span><span>עם מי את עובדת בעיקר? אוכלוסיית היעד</span></label>
+          <p class="hint" id="audience_hint">לדוגמה: מבוגרים, מתבגרים, הדרכת הורים, זוגות, נשים במעגלי חיים</p>
+          <input id="audience" name="audience" type="text" aria-describedby="audience_hint">
+        </div>
+      </section>
+
+      <!-- Step 2 -->
+      <section class="step" data-step="2" data-name="הלב של הטיפול" hidden>
+        <div class="step-title"><h2>הלב של הטיפול</h2><p>מכאן יגיעו הטקסטים לדף. אפשר לכתוב בנקודות, אני אערוך.</p></div>
+
+        <div class="q">
+          <label for="help_text"><span class="num">6.</span><span>איך היית מסבירה במשפט או שניים למי שפונה אלייך – במה את יכולה לעזור לו?</span></label>
+          <textarea id="help_text" name="help_text" placeholder="אפשר לכתוב נקודות פשוטות כמו: התמודדות עם חרדה, משברי חיים, דימוי עצמי, מערכות יחסים, שחיקה"></textarea>
+        </div>
+
+        <div class="q">
+          <label for="approach"><span class="num">7.</span><span>מה הגישה הטיפולית שלך, ואיך נראה המפגש איתך?</span></label>
+          <textarea id="approach" name="approach" placeholder="לדוגמה: טיפול דינמי, CBT, ACT, שילוב גישות – ומה חשוב לך שהמטופל ירגיש בחדר"></textarea>
+        </div>
+
+        <div class="q">
+          <label for="about"><span class="num">8.</span><span>כמה מילים עלייך ועל הרקע המקצועי שלך ("נעים להכיר")</span></label>
+          <textarea id="about" name="about" placeholder="השכלה, מקומות שבהם עבדת בעבר, ומה מניע אותך במקצוע. מספיק לכתוב בנקודות ואני אערוך לפסקה זורמת"></textarea>
+        </div>
+      </section>
+
+      <!-- Step 3 -->
+      <section class="step" data-step="3" data-name="אווירה, עיצוב ופרטי יצירת קשר" hidden>
+        <div class="step-title"><h2>אווירה, עיצוב ופרטי יצירת קשר</h2><p>כמעט סיימנו.</p></div>
+
+        <div class="q" role="radiogroup" aria-labelledby="mood_label">
+          <div class="q-label" id="mood_label"><span class="num">9.</span><span>איזו אווירה היית רוצה שהדף ישדר?</span></div>
+          <div class="choices mood">
+            <label class="choice radio"><input type="radio" name="mood" value="רגוע, טבעי ורך"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4.5 4.5L19 7"/></svg></span><span class="choice-text"><b>רגוע, טבעי ורך</b><span class="swatches"><i style="background:#FAF8F5"></i><i style="background:#4A6B5D"></i><i style="background:#E5DFD3"></i></span></span></label>
+            <label class="choice radio"><input type="radio" name="mood" value="חם, עוטף וביתי"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4.5 4.5L19 7"/></svg></span><span class="choice-text"><b>חם, עוטף וביתי</b><span class="swatches"><i style="background:#F7F1E8"></i><i style="background:#C87D65"></i><i style="background:#E8B8A2"></i></span></span></label>
+            <label class="choice radio"><input type="radio" name="mood" value="נקי, בהיר ומקצועי"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4.5 4.5L19 7"/></svg></span><span class="choice-text"><b>נקי, בהיר ומקצועי</b><span class="swatches"><i style="background:#FFFFFF"></i><i style="background:#6B8E9B"></i><i style="background:#DCE4E8"></i></span></span></label>
+            <label class="choice radio"><input type="radio" name="mood" value="פתוחה להמלצה שלך"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4.5 4.5L19 7"/></svg></span><span class="choice-text"><b>פתוחה להמלצה שלך</b></span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label for="phone"><span class="num">10.</span><span>מספר טלפון לקבלת הודעות וואטסאפ מהדף <span class="req">*</span></span></label>
+          <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" style="text-align:right" required>
+          <span class="err" id="phone_err" hidden>נא למלא מספר טלפון תקין</span>
+        </div>
+
+        <div class="q">
+          <label for="email"><span class="num">11.</span><span>כתובת מייל לקבלת פניות מהטופס בדף <span class="req">*</span></span></label>
+          <input id="email" name="email" type="email" inputmode="email" autocomplete="email" dir="ltr" style="text-align:right" required>
+          <span class="err" id="email_err" hidden>נא למלא כתובת מייל תקינה</span>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="num">12.</span><span>תמונת פרופיל ולוגו (אם יש)</span></div>
+          <p class="hint">אנא צרפי תמונה ברורה ונעימה שלך (עדיף תמונה מוארת עם רקע נקי). אם יש לך לוגו קיים – צרפי גם אותו.</p>
+          <div class="uploads">
+            <div class="drop" data-kind="photo">
+              <input type="file" accept="image/*" id="file_photo" aria-label="תמונת פרופיל">
+              <div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="9" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><b>תמונת פרופיל</b><span>לחצי לבחירה או גררי לכאן</span></div>
+              <div class="preview" hidden><img alt="תצוגה מקדימה של תמונת הפרופיל"><div class="meta"><span class="fname"></span><button type="button" class="remove">הסרה</button></div></div>
+            </div>
+            <div class="drop" data-kind="logo">
+              <input type="file" accept="image/*" id="file_logo" aria-label="לוגו">
+              <div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M8 15c1.5-3 6.5-3 8 0"/><circle cx="12" cy="10" r="2"/></svg><b>לוגו <span class="opt">(אם יש)</span></b><span>לחצי לבחירה או גררי לכאן</span></div>
+              <div class="preview" hidden><img alt="תצוגה מקדימה של הלוגו"><div class="meta"><span class="fname"></span><button type="button" class="remove">הסרה</button></div></div>
+            </div>
+          </div>
+          <span class="err" id="file_err" hidden></span>
+        </div>
+      </section>
+
+      <div class="nav">
+        <button type="button" class="btn btn-ghost" id="backBtn" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>חזרה</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn btn-primary" id="nextBtn">המשך לשלב הבא
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+        <button type="submit" class="btn btn-terra" id="submitBtn" hidden>שליחת השאלון לידידיה</button>
+      </div>
+      <div class="send-err" id="sendErr" role="alert" hidden><p>השאלון לא נשלח, כנראה בגלל תקלה בחיבור. התשובות שלך שמורות. אפשר לנסות שוב, או להעתיק את התשובות ולשלוח לי בוואטסאפ.</p><button type="button" class="btn btn-ghost" id="copyBtn2" style="margin-top:10px">העתקת כל התשובות</button><p class="copied" id="copied2" aria-live="polite"></p></div>
+      <p class="save-note">התשובות נשמרות אוטומטית במכשיר הזה, כך שאפשר להפסיק ולחזור אחר כך.</p>
+    </form>
+
+    <!-- Success -->
+    <section class="done" id="done" hidden>
+      <div class="done-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg></div>
+      <h2>תודה רבה! הפרטים התקבלו בהצלחה.</h2>
+      <p>קיבלתי את התשובות שלך ואני כבר ניגש לעבודה. סקיצה ראשונה של "דף בית למטפל" תהיה מוכנה עבורך תוך 3–4 ימי עסקים.</p>
+      <div class="done-actions">
+        <a class="btn btn-ghost" id="waBtn" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.86 9.86 0 0 0 12.04 2Zm4.52 11.99c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29Z"/></svg>
+          מעבר לוואטסאפ של ידידיה</a>
+        <button type="button" class="btn btn-ghost" id="copyBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          העתקת כל התשובות</button>
+      </div>
+      <p class="copied" id="copied" aria-live="polite"></p>
+    </section>
+  </div>
+</main>
+
+<footer>Setting – בניית דפי בית לפסיכולוגים ומטפלים</footer>
+
+<script>
+/* ===== הגדרות ===== */
+const WHATSAPP_NUMBER = "972527732544";
+const LEAD_EMAIL = "yedidua1@gmail.com";   // השאלון נשלח לכאן (FormSubmit)
+const DRAFT_KEY = "setting-intake-draft-v1";
+/* ================== */
+
+const form = document.getElementById("intake");
+const steps = [...form.querySelectorAll(".step")];
+const bars = [...document.querySelectorAll(".progress-bars i")];
+const backBtn = document.getElementById("backBtn"), nextBtn = document.getElementById("nextBtn"), submitBtn = document.getElementById("submitBtn");
+const files = { photo: null, logo: null };   // {mime, name, data(base64), url}
+let current = 0;
+
+const QUESTIONS = [
+  ["full_name", "1. שם מלא ותואר מקצועי"],
+  ["license", "2. מספר רישיון / הסמכה"],
+  ["locations", "3. איפה מקבלת מטופלים"],
+  ["city", "4. עיר/שכונה של הקליניקה"],
+  ["audience", "5. אוכלוסיית היעד"],
+  ["help_text", "6. במה יכולה לעזור"],
+  ["approach", "7. גישה טיפולית ואיך נראה המפגש"],
+  ["about", "8. נעים להכיר"],
+  ["mood", "9. אווירה"],
+  ["phone", "10. טלפון לוואטסאפ"],
+  ["email", "11. מייל לפניות"],
+];
+
+function values() {
+  const v = {};
+  for (const [k] of QUESTIONS) {
+    if (k === "locations") v[k] = [...form.querySelectorAll('input[name=locations]:checked')].map(i => i.value);
+    else if (k === "mood") v[k] = (form.querySelector('input[name=mood]:checked') || {}).value || "";
+    else v[k] = form.elements[k].value.trim();
+  }
+  if (!v.locations.includes("קליניקה פרונטלית")) v.city = "";
+  return v;
+}
+
+/* ---- steps ---- */
+function show(i, focus = true) {
+  current = i;
+  steps.forEach((s, n) => s.hidden = n !== i);
+  bars.forEach((b, n) => b.classList.toggle("done", n <= i));
+  document.getElementById("stepNum").textContent = `שלב ${i + 1} מתוך 3`;
+  document.getElementById("stepName").textContent = steps[i].dataset.name;
+  backBtn.hidden = i === 0;
+  nextBtn.hidden = i === steps.length - 1;
+  submitBtn.hidden = i !== steps.length - 1;
+  if (focus) {
+    document.getElementById("progress").scrollIntoView({ block: "start" });
+    const first = steps[i].querySelector("input:not([type=checkbox]):not([type=radio]):not([type=file]),textarea");
+    if (first && matchMedia("(min-width: 700px)").matches) first.focus({ preventScroll: true });
+  }
+  saveDraft();
+}
+
+function setErr(id, bad) {
+  const el = form.elements[id] || document.getElementById(id);
+  if (el && el.setAttribute) el.setAttribute("aria-invalid", String(bad));
+  const e = document.getElementById(id + "_err"); if (e) e.hidden = !bad;
+  return !bad;
+}
+function validate(i) {
+  const v = values(); let ok = true, firstBad = null;
+  const check = (id, good) => { if (!setErr(id, !good)) { ok = false; firstBad = firstBad || id; } };
+  if (i === 0) check("full_name", v.full_name.length >= 2);
+  if (i === 2) {
+    check("phone", v.phone.replace(/\D/g, "").length >= 9);
+    check("email", /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email));
+  }
+  if (firstBad) form.elements[firstBad].focus();
+  return ok;
+}
+nextBtn.addEventListener("click", () => { if (validate(current)) show(current + 1); });
+backBtn.addEventListener("click", () => show(current - 1));
+form.addEventListener("keydown", e => {
+  if (e.key === "Enter" && e.target.tagName === "INPUT" && e.target.type !== "checkbox" && e.target.type !== "radio") {
+    e.preventDefault(); if (current < steps.length - 1) nextBtn.click();
+  }
+});
+
+/* ---- conditional city ---- */
+const clinic = document.getElementById("loc_clinic");
+function syncCity() {
+  const on = clinic.checked;
+  document.getElementById("city_q").hidden = !on;
+  document.getElementById("audience_num").textContent = on ? "5." : "4.";
+}
+clinic.addEventListener("change", syncCity);
+
+/* ---- draft ---- */
+function saveDraft() {
+  try { localStorage.setItem(DRAFT_KEY, JSON.stringify({ v: values(), step: current })); } catch {}
+}
+function loadDraft() {
+  let d; try { d = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null"); } catch {}
+  if (!d) return;
+  const v = d.v || {};
+  for (const [k] of QUESTIONS) {
+    if (k === "locations") (v.locations || []).forEach(val => { const i = form.querySelector(`input[name=locations][value="${val}"]`); if (i) i.checked = true; });
+    else if (k === "mood") { const i = v.mood && form.querySelector(`input[name=mood][value="${v.mood}"]`); if (i) i.checked = true; }
+    else if (v[k]) form.elements[k].value = v[k];
+  }
+  syncCity();
+  if (d.step > 0 && d.step < steps.length) show(d.step, false);
+}
+form.addEventListener("input", saveDraft);
+form.addEventListener("change", saveDraft);
+
+/* ---- images: resize in the browser ---- */
+async function shrink(file, kind) {
+  const url = URL.createObjectURL(file);
+  try {
+    const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = url; });
+    const max = kind === "logo" ? 1200 : 1600;
+    const scale = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+    const w = Math.round(img.naturalWidth * scale), h = Math.round(img.naturalHeight * scale);
+    const c = document.createElement("canvas"); c.width = w; c.height = h;
+    const ctx = c.getContext("2d");
+    const keepAlpha = kind === "logo" && /png|webp|svg/.test(file.type);
+    if (!keepAlpha) { ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, w, h); }
+    ctx.drawImage(img, 0, 0, w, h);
+    const mime = keepAlpha ? "image/png" : "image/jpeg";
+    let dataUrl = c.toDataURL(mime, 0.85);
+    if (dataUrl.length > 1_400_000 && mime === "image/jpeg") dataUrl = c.toDataURL(mime, 0.7);
+    if (dataUrl.length > 1_400_000) throw new Error("too big");
+    return { mime, name: file.name, data: dataUrl.split(",")[1], url: dataUrl };
+  } finally { URL.revokeObjectURL(url); }
+}
+document.querySelectorAll(".drop").forEach(drop => {
+  const kind = drop.dataset.kind, input = drop.querySelector("input"), ph = drop.querySelector(".ph"), pv = drop.querySelector(".preview");
+  const errEl = document.getElementById("file_err");
+  async function take(file) {
+    errEl.hidden = true;
+    if (!file) return;
+    if (!file.type.startsWith("image/")) { errEl.textContent = "אפשר לצרף רק קובץ תמונה (JPG, PNG וכדומה)."; errEl.hidden = false; return; }
+    if (file.size > 25 * 1024 * 1024) { errEl.textContent = "הקובץ גדול מדי. אפשר לצרף תמונה עד 25MB."; errEl.hidden = false; return; }
+    try {
+      files[kind] = await shrink(file, kind);
+      pv.querySelector("img").src = files[kind].url;
+      pv.querySelector(".fname").textContent = file.name;
+      ph.hidden = true; pv.hidden = false; input.style.pointerEvents = "none";
+    } catch { errEl.textContent = "לא הצלחתי לקרוא את התמונה. אפשר לנסות קובץ אחר."; errEl.hidden = false; }
+  }
+  input.addEventListener("change", () => take(input.files[0]));
+  drop.addEventListener("dragover", e => { e.preventDefault(); drop.classList.add("over"); });
+  drop.addEventListener("dragleave", () => drop.classList.remove("over"));
+  drop.addEventListener("drop", e => { e.preventDefault(); drop.classList.remove("over"); take(e.dataTransfer.files[0]); });
+  pv.querySelector(".remove").addEventListener("click", e => {
+    e.stopPropagation(); files[kind] = null; input.value = ""; ph.hidden = false; pv.hidden = true; input.style.pointerEvents = "";
+  });
+});
+
+/* ---- summary text (copy + email) ---- */
+function summary(v) {
+  const lines = ["שאלון היכרות – Setting", ""];
+  for (const [k, label] of QUESTIONS) {
+    let val = k === "locations" ? v.locations.join(", ") : v[k];
+    if (k === "city" && !v.locations.includes("קליניקה פרונטלית")) continue;
+    lines.push(label + ":", val || "—", "");
+  }
+  const att = ["photo", "logo"].filter(k => files[k]).map(k => k === "photo" ? "תמונת פרופיל" : "לוגו");
+  lines.push("12. קבצים מצורפים:", att.length ? att.join(", ") : "—");
+  return lines.join("\n");
+}
+
+/* ---- submit ---- */
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  if (!validate(2)) return;
+  const v = values();
+  const sendErr = document.getElementById("sendErr");
+  sendErr.hidden = true; submitBtn.disabled = true; submitBtn.textContent = "שולח…";
+  try {
+    const payload = { ...v, files: ["photo", "logo"].filter(k => files[k]).map(k => ({ kind: k, mime: files[k].mime, name: files[k].name, data: files[k].data })) };
+    const res = await fetch("/api/intake", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) });
+    const out = await res.json().catch(() => ({}));
+    if (!res.ok || !out.ok) throw new Error("save failed");
+    sendEmail(out, v);
+    try { localStorage.removeItem(DRAFT_KEY); } catch {}
+    window.__summary = summary(v);
+    form.hidden = true;
+    document.getElementById("progress").hidden = true;
+    document.getElementById("intro").hidden = true;
+    document.getElementById("done").hidden = false;
+    scrollTo({ top: 0 });
+  } catch {
+    sendErr.hidden = false; submitBtn.disabled = false; submitBtn.textContent = "שליחת השאלון לידידיה";
+    window.__summary = summary(v);
+  }
+});
+
+function sendEmail(out, v) {
+  const body = { _subject: "שאלון היכרות חדש: " + v.full_name, _template: "table", _captcha: "false" };
+  for (const [k, label] of QUESTIONS) {
+    if (k === "city" && !v.locations.includes("קליניקה פרונטלית")) continue;
+    body[label] = (k === "locations" ? v.locations.join(", ") : v[k]) || "—";
+  }
+  (out.files || []).forEach(f => { body[f.kind === "photo" ? "12. תמונת פרופיל" : "12. לוגו"] = location.origin + "/files/" + out.token + "/" + f.id; });
+  body["וואטסאפ"] = "https://wa.me/972" + v.phone.replace(/\D/g, "").replace(/^0/, "");
+  fetch("https://formsubmit.co/ajax/" + LEAD_EMAIL, { method: "POST", headers: { "content-type": "application/json", accept: "application/json" }, body: JSON.stringify(body) })
+    .then(r => r.json().then(b => ({ ok: r.ok && String(b.success) === "true", error: r.status + " " + (b.message || "") })))
+    .catch(e => ({ ok: false, error: "fetch: " + e }))
+    .then(r => fetch("/api/intake/" + out.id + "/email", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...r, token: out.token }), keepalive: true }).catch(() => {}));
+}
+
+/* ---- success actions ---- */
+document.getElementById("waBtn").href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent("היי ידידיה, מילאתי עכשיו את שאלון ההיכרות ורציתי להוסיף:");
+async function copySummary(msgId) {
+  const text = window.__summary || summary(values());
+  const msg = document.getElementById(typeof msgId === "string" ? msgId : "copied");
+  try { await navigator.clipboard.writeText(text); msg.textContent = "התשובות הועתקו. אפשר להדביק אותן בוואטסאפ."; }
+  catch {
+    const ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); msg.textContent = "התשובות הועתקו. אפשר להדביק אותן בוואטסאפ."; } catch { msg.textContent = "לא הצלחתי להעתיק אוטומטית."; }
+    ta.remove();
+  }
+}
+document.getElementById("copyBtn").addEventListener("click", () => copySummary("copied"));
+document.getElementById("copyBtn2").addEventListener("click", () => copySummary("copied2"));
+
+loadDraft();
+syncCity();
+</script>
+</body>
+</html>
