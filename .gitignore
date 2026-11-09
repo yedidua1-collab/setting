@@ -2,3 +2,5 @@ node_modules/
 .wrangler/
 design/video/*.mp4
 design/video/out/
+design/poster-*.png
+design/poster-*.pdf
