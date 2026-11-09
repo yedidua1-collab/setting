@@ -233,6 +233,9 @@ a{color:inherit}
 .field input[aria-invalid="true"]{border-color:var(--terra)}
 .field .err{font-size:.88rem;color:#A85A43;min-height:0}
 .form .btn{width:100%;margin-top:4px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.form-error{font-size:.92rem;color:#A85A43;text-align:center}
+.btn[disabled]{opacity:.65;cursor:wait;transform:none}
 .form-privacy{font-size:.86rem;color:var(--ink-2);text-align:center}
 .thanks{display:grid;gap:14px;justify-items:center;text-align:center;padding-block:24px}
 .thanks-mark{width:64px;height:64px;border-radius:50%;background:var(--sage-soft);color:var(--sage);display:grid;place-items:center;animation:pop .5s ease}
@@ -498,7 +501,9 @@ a{color:inherit}
             <label for="fField">תחום טיפול <small>(אופציונלי)</small></label>
             <input id="fField" name="field" type="text">
           </div>
-          <button class="btn btn--primary" type="submit">שליחת פרטים לידידיה</button>
+          <div class="hp" aria-hidden="true"><label for="fWebsite">אתר</label><input id="fWebsite" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+          <button class="btn btn--primary" type="submit" id="fSubmit">שליחת פרטים לידידיה</button>
+          <p class="form-error" id="fSendErr" role="alert" hidden>הפרטים לא נשלחו, כנראה בגלל תקלה בחיבור. אפשר לנסות שוב, או לשלוח לי הודעה בוואטסאפ.</p>
         </form>
         <div class="thanks" id="thanks" hidden>
           <div class="thanks-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg></div>
@@ -571,7 +576,7 @@ if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: re
 
 // lead form
 const form = document.getElementById("leadForm");
-form.addEventListener("submit", e => {
+form.addEventListener("submit", async e => {
   e.preventDefault();
   const name = form.fName.value.trim();
   const phone = form.fPhone.value.trim();
@@ -585,12 +590,26 @@ form.addEventListener("submit", e => {
   if (!nameOk) { form.fName.focus(); return; }
   if (!phoneOk) { form.fPhone.focus(); return; }
 
-  /* כאן מתחברים לשירות שיקבל את הפרטים (Formspree / Google Sheets / מייל).
-     עד אז הפרטים נשמרים רק אצל הגולשת ומוצגת הודעת אישור. */
-  const first = name.split(/\s+/)[0];
-  document.getElementById("thanksTitle").textContent = "תודה " + first + ", הפרטים התקבלו";
-  form.hidden = true;
-  document.getElementById("thanks").hidden = false;
+  const btn = document.getElementById("fSubmit");
+  const sendErr = document.getElementById("fSendErr");
+  sendErr.hidden = true;
+  btn.disabled = true; btn.textContent = "שולח…";
+  try {
+    const res = await fetch("/api/lead", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ name, phone, field: area, website: form.fWebsite.value })
+    });
+    const out = await res.json().catch(() => ({}));
+    if (!res.ok || !out.ok) throw new Error("send failed");
+    const first = name.split(/\s+/)[0];
+    document.getElementById("thanksTitle").textContent = "תודה " + first + ", הפרטים התקבלו";
+    form.hidden = true;
+    document.getElementById("thanks").hidden = false;
+  } catch (err) {
+    sendErr.hidden = false;
+    btn.disabled = false; btn.textContent = "שליחת פרטים לידידיה";
+  }
 });
 </script>
 </body>
