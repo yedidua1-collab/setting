@@ -29,5 +29,11 @@ curl -sS -X POST "https://api.cloudflare.com/client/v4/accounts/9bedd28fad9d3aa1
   -H 'content-type: application/json' -d '{"sql":"SELECT * FROM leads WHERE status = '\''new'\'' ORDER BY created_at DESC"}'
 ```
 
+## Onboarding questionnaire (/start)
+`start.html` (full document, embedded by `build.mjs`). 3 steps, 12 questions, draft autosaved in localStorage.
+Submit → `POST /api/intake` saves to D1 tables `intakes` + `intake_files` (images resized in the browser, stored as base64),
+then the browser emails the answers via FormSubmit with image links `/files/<token>/<file id>` and reports to `POST /api/intake/:id/email`.
+Read a submission: `SELECT * FROM intakes ORDER BY created_at DESC`; images: `SELECT id, kind, mime, data FROM intake_files WHERE intake_id = ?` (base64).
+
 ## Portfolio
 Three works: עשירי (asiri-lxm4.netlify.app), פה שבת? (po-shabbat.netlify.app) and Setting itself. מערכת שי (shaipsy.com) is NOT shown until its official launch (Yedidya's decision 2026-11-09).
