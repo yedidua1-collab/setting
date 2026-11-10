@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setting · מה מייחד את הטיפול שלך</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&family=Heebo:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6F5F2;--ink:#23272B;--soft:#5E666D;--line:#DEDCD6;--accent:#4F6577;--card:#FFFFFF}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:Heebo,system-ui,sans-serif;font-weight:300;line-height:1.7;font-size:17px}
+.wrap{max-width:640px;margin:0 auto;padding:48px 22px 80px}
+.logo{font-family:"Frank Ruhl Libre",serif;font-size:24px;direction:ltr;text-align:right;margin-bottom:48px}
+h1{font-family:"Frank Ruhl Libre",serif;font-weight:500;font-size:34px;line-height:1.25;margin-bottom:16px}
+.intro{color:var(--soft);margin-bottom:12px}
+.note{color:var(--soft);font-size:15px;margin-bottom:44px}
+.part{font-family:"Frank Ruhl Libre",serif;font-size:21px;margin:44px 0 6px}
+.part-sub{color:var(--soft);font-size:15px;margin-bottom:18px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 20px 16px;margin-bottom:14px}
+.q label{display:block;font-weight:500;margin-bottom:4px}
+.q .hint{display:block;color:var(--soft);font-size:14.5px;margin-bottom:10px}
+textarea,input{width:100%;font:inherit;font-weight:300;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#FCFCFB;resize:vertical}
+textarea{min-height:92px}
+textarea:focus,input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+.end{margin-top:48px;text-align:center}
+.end p{color:var(--soft);margin-bottom:20px}
+.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:500;padding:14px 30px;border-radius:999px;font-size:17px;border:0;cursor:pointer}
+.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
+.link{background:none;border:0;color:var(--soft);font:inherit;font-size:15px;text-decoration:underline;cursor:pointer;margin-top:16px}
+.status{font-size:14px;color:var(--soft);min-height:22px;margin-top:8px}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="logo">Setting.</div>
+  <h1>מה מייחד את הטיפול שלך?</h1>
+  <p class="intro">כמה שאלות לעצור ולהסתכל על העבודה שלך מהצד. לפעמים דווקא מה שנראה לנו מובן מאליו הוא בדיוק הדבר שמייחד אותנו.</p>
+  <p class="note">אין תשובות נכונות, וגם כמה מילים מספיקות. אפשר לדלג על שאלה. מה שכתבת נשמר במכשיר, אז אפשר לעצור ולחזור.</p>
+
+  <form id="f" autocomplete="off">
+    <div class="q"><label for="name">איך קוראים לך, ובמה את/ה מטפל/ת?</label><input id="name" data-q="שם ותחום"></div>
+
+    <div class="part">מאיפה זה מגיע</div>
+    <div class="part-sub">הסיפור שמאחורי הבחירה</div>
+    <div class="q"><label for="q1">מה הביא אותך להיות מטפל/ת?</label><span class="hint">לא התשובה של הראיון לתואר. הסיבה האמיתית.</span><textarea id="q1" data-q="מה הביא אותי להיות מטפל/ת"></textarea></div>
+    <div class="q"><label for="q2">מה את/ה מאמין/ה שבאמת עוזר לאנשים להשתנות?</label><span class="hint">משהו שלמדת מהניסיון, לא רק מהספרים.</span><textarea id="q2" data-q="מה לדעתי באמת עוזר לאנשים להשתנות"></textarea></div>
+
+    <div class="part">איך זה נראה בחדר</div>
+    <div class="part-sub">הדרך שלך, ברגעים האמיתיים</div>
+    <div class="q"><label for="q3">חשוב/י על מטופל/ת שהתהליך איתו/ה נגע בך. מה קרה שם, ומה את/ה עשית שמטפל/ת אחר/ת אולי לא היה עושה?</label><span class="hint">בלי פרטים מזהים, רק את הרגע.</span><textarea id="q3" data-q="תהליך שנגע בי ומה עשיתי אחרת"></textarea></div>
+    <div class="q"><label for="q4">כשמשהו נתקע או נהיה קשה בטיפול, מה את/ה עושה?</label><textarea id="q4" data-q="מה אני עושה כשנתקע או קשה"></textarea></div>
+    <div class="q"><label for="q5">איך היית מסביר/ה את הגישה שלך לחבר/ה שלא מהתחום, בשני משפטים?</label><span class="hint">בלי מילים מקצועיות.</span><textarea id="q5" data-q="הגישה שלי בשני משפטים"></textarea></div>
+
+    <div class="part">מה אחרים רואים</div>
+    <div class="part-sub">מבחוץ פנימה</div>
+    <div class="q"><label for="q6">מה מטופלים אומרים לך, במיוחד בסוף טיפול?</label><span class="hint">משפט שנשאר איתך.</span><textarea id="q6" data-q="מה מטופלים אומרים לי"></textarea></div>
+    <div class="q"><label for="q7">עם מי את/ה הכי מדויק/ת? ועם מי פחות מתאים לך לעבוד?</label><textarea id="q7" data-q="עם מי אני הכי מדויק/ת ועם מי פחות"></textarea></div>
+
+    <div class="part">המרחב שלך</div>
+    <div class="part-sub">מה מישהו פוגש כשהוא מגיע אלייך</div>
+    <div class="q"><label for="q8">איך היית רוצה שמישהו ירגיש ברגע שהוא נכנס אלייך?</label><span class="hint">שלוש מילים מספיקות.</span><textarea id="q8" data-q="איך ארצה שירגישו כשנכנסים"></textarea></div>
+    <div class="q"><label for="q9">מה הדבר שהכי חשוב לך שמטופל/ת ידע/תדע עלייך עוד לפני הפגישה הראשונה?</label><textarea id="q9" data-q="מה חשוב לי שידעו לפני הפגישה הראשונה"></textarea></div>
+  </form>
+
+  <div class="end">
+    <p>כשסיימת, אפשר לשלוח לי את התשובות בוואטסאפ. אחזור אלייך עם סיכום קצר של מה שעולה מהן: מה הגישה שלך ומה מייחד אותך.</p>
+    <a id="send" class="btn" href="#" target="_blank" rel="noopener" aria-disabled="true">שליחה לידידיה בוואטסאפ</a>
+    <div><button type="button" id="copy" class="link">או להעתיק את התשובות</button></div>
+    <div class="status" id="status" aria-live="polite"></div>
+    <p style="font-size:14px;margin-top:6px">ידידיה · Setting · 052-773-2544</p>
+  </div>
+</main>
+<script>
+const PHONE='972527732544',KEY='setting-explore-v1';
+const fields=[...document.querySelectorAll('[data-q]')];
+const send=document.getElementById('send'),status=document.getElementById('status');
+try{const s=JSON.parse(localStorage.getItem(KEY)||'{}');fields.forEach(f=>{if(s[f.id])f.value=s[f.id]})}catch(e){}
+function text(){
+  const parts=fields.filter(f=>f.value.trim()).map(f=>'*'+f.dataset.q+'*\n'+f.value.trim());
+  return parts.length?'היי ידידיה, מילאתי את השאלון של Setting 🙂\n\n'+parts.join('\n\n'):'';
+}
+function update(){
+  const t=text();
+  send.setAttribute('aria-disabled',t?'false':'true');
+  send.href=t?'https://wa.me/'+PHONE+'?text='+encodeURIComponent(t):'#';
+  try{const s={};fields.forEach(f=>s[f.id]=f.value);localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}
+}
+fields.forEach(f=>f.addEventListener('input',update));update();
+send.addEventListener('click',()=>{status.textContent='אם וואטסאפ לא נפתח, אפשר להעתיק את התשובות ולשלוח ל-052-773-2544'});
+document.getElementById('copy').addEventListener('click',async()=>{
+  const t=text();if(!t){status.textContent='עוד לא נכתבו תשובות';return}
+  try{await navigator.clipboard.writeText(t);status.textContent='הועתק. אפשר להדביק בוואטסאפ ל-052-773-2544'}
+  catch(e){status.textContent='ההעתקה לא עבדה כאן, אפשר לסמן את הטקסט ולהעתיק ידנית'}
+});
+</script>
+</body>
+</html>
