@@ -220,6 +220,26 @@ a{color:inherit}
 @media (max-width:860px){.package{grid-template-columns:1fr}}
 @media (max-width:480px){.package-list .btn{width:100%;text-align:center;line-height:1.3;padding-block:12px}}
 
+/* Starter / gift voucher */
+.starter{margin-bottom:28px;display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,4vw,56px);align-items:center;background:var(--white);border:1px solid var(--line);border-radius:28px;padding:clamp(28px,4.5vw,48px)}
+.starter-head{display:grid;gap:14px}
+.starter-head h3{font-size:var(--step-2)}
+.starter-price{display:flex;align-items:baseline;gap:8px;font-family:var(--font-display);color:var(--sage)}
+.starter-price strong{font-size:clamp(2.6rem,2rem + 2vw,3.4rem);font-weight:500;line-height:1}
+.starter-price span{font-size:1.4rem}
+.starter .roi{font-size:.95rem;color:var(--terra,#C87D65);font-weight:600;margin:.4rem 0 .2rem}
+.starter-price .from{font-family:var(--font-body,inherit);font-size:1.05rem;color:var(--ink-soft,inherit);opacity:.8}
+.starter-head p{color:var(--ink-2)}
+.gift-note{display:grid;gap:6px;background:var(--terra-soft);border-radius:16px;padding:16px 18px;color:#7A4433;font-size:1rem;line-height:1.6}
+.gift-note b{font-weight:700}
+.starter-list{display:grid;gap:22px}
+.starter-list ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.starter-list li{display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:start;font-size:1.02rem;line-height:1.6}
+.starter-list li svg{width:22px;height:22px;color:var(--sage);margin-top:3px}
+.starter-list .btn{justify-self:start}
+@media (max-width:860px){.starter{grid-template-columns:1fr}}
+@media (max-width:480px){.starter-list .btn{width:100%}}
+
 /* FAQ */
 .faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(28px,5vw,72px);align-items:start}
 .faq-grid .section-head{margin-bottom:0;position:sticky;top:calc(110px + env(safe-area-inset-top,0px))}
@@ -279,9 +299,31 @@ a{color:inherit}
 .wa-float::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #25D366;animation:ring 2.8s ease-out infinite}
 @keyframes ring{0%{transform:scale(1);opacity:.6}80%,100%{transform:scale(1.45);opacity:0}}
 
-/* gentle reveal, visible at rest */
-.reveal{transition:opacity .7s ease,transform .7s ease}
-.js .reveal.pending{opacity:.001;transform:translateY(14px)}
+/* Motion system (learned from sarabramson.com): a few fixed tokens, every animation picks from them */
+:root{--dur-fast:160ms;--dur-base:240ms;--dur-slow:560ms;--ease-out:cubic-bezier(.16,1,.3,1);--spring:cubic-bezier(.34,1.56,.64,1);--rise:22px;--mot:1}
+@media (prefers-reduced-motion:reduce){:root{--rise:0px;--mot:0}}
+/* gentle reveal, visible at rest; groups enter 70ms apart (--i) */
+.reveal{transition:opacity calc(.8s * var(--mot)) var(--ease-out),transform calc(.9s * var(--mot)) var(--ease-out);transition-delay:calc(var(--i,0) * 70ms * var(--mot))}
+.js .reveal.pending{opacity:0;transform:translateY(var(--rise))}
+/* headlines rise word by word (never letter by letter in Hebrew) */
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding:.04em .03em .18em;margin:-.04em -.03em -.18em}
+.w>span{display:inline-block;transition:transform calc(1s * var(--mot) + 1ms) var(--spring);transition-delay:calc(var(--wi,0) * 70ms * var(--mot));transform-origin:right bottom}
+.split.down .w>span{transform:translateY(1.1em) rotate(4deg);transition:none}
+/* mobile action bar: appears once the story starts, leaves at the contact section */
+.cta-bar{display:none}
+@media (max-width:860px){
+  .wa-float{display:none}
+  .cta-bar{position:fixed;z-index:55;left:calc(12px + env(safe-area-inset-left,0px));right:calc(12px + env(safe-area-inset-right,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;padding:7px;border-radius:999px;background:color-mix(in srgb,var(--white) 94%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line);box-shadow:0 14px 34px -14px rgba(43,48,46,.35);transform:translateY(calc(100% + 40px));transition:transform calc(.5s * var(--mot) + 1ms) var(--spring)}
+  .cta-bar.on{transform:none}
+  .cta-bar-main{flex:1;display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:999px;background:var(--sage);color:var(--white);font:600 1rem/1 var(--font-body);text-decoration:none}
+  .cta-bar-wa{flex:none;width:48px;height:48px;border-radius:50%;background:#25D366;color:#fff;display:grid;place-items:center}
+  .cta-bar-wa svg{width:26px;height:26px}
+}
+.explore{background:var(--sage-soft)}
+.explore-card{max-width:760px;margin-inline:auto;text-align:center}
+.explore-card h2{font-size:var(--step-2);margin:10px 0 14px}
+.explore-card p{color:var(--ink-2);margin:0 auto 26px;max-width:620px}
+.explore-card small{display:block;margin-top:14px;color:var(--ink-2);font-size:var(--step--1)}
 </style>
 </head>
 <body>
@@ -435,11 +477,33 @@ a{color:inherit}
   <!-- Package -->
   <section class="band" id="package">
     <div class="wrap">
+      <div class="starter reveal" id="gift">
+        <div class="starter-head">
+          <span class="eyebrow">מסלול פתיחה · מתנה מרגשת</span>
+          <h3>כרטיס ביקור דיגיטלי</h3>
+          <p class="roi">מטופל אחד שמגיע דרך הדף כבר מחזיר את ההשקעה.</p>
+          <p>דף אחד, קצר ונקי, שמאפשר למטופלים להכיר אותך ולפנות אלייך בלחיצה.</p>
+          <div class="gift-note">
+            <b>רוצים לתת את זה במתנה?</b>
+            <span>אפשר לרכוש שובר מתנה. מי שמקבלת אותו יכולה לממש אותו לכרטיס ביקור, או לשדרג לחבילה המלאה ולשלם רק את ההפרש.</span>
+          </div>
+        </div>
+        <div class="starter-list">
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg><span>תמונה, שם, תואר ותחומי טיפול</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg><span>פסקה מלוטשת על הגישה שלך</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg><span>כפתור וואטסאפ וכפתור חיוג</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg><span>עיצוב רגוע בצבעים שמותאמים לך, מותאם לנייד</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg><span>סבב תיקונים אחד<small style="display:block;color:var(--ink-2);font-size:.9rem">(כתובת חינמית ללא דומיין אישי וללא טופס פנייה. אלה כלולים בחבילה המלאה)</small></span></li>
+          </ul>
+          <a class="btn btn--ghost" href="#contact">לרכישת כרטיס ביקור או שובר מתנה</a>
+        </div>
+      </div>
+
       <div class="package reveal">
         <div class="package-side">
-          <span class="badge">מחיר השקה מיוחד ל-5 הקליניקות הראשונות</span>
+          <span class="badge">תנאי השקה מיוחדים ל-5 הקליניקות הראשונות</span>
           <h2>חבילת "דף בית למטפל"</h2>
-          <div class="price"><strong>890</strong><span>₪</span></div>
           <p class="price-note">תשלום חד-פעמי, ללא דמי ניהול חודשיים</p>
         </div>
         <div class="package-list">
@@ -450,9 +514,9 @@ a{color:inherit}
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg><span>כפתור וואטסאפ נגיש לפנייה ישירה ומהירה</span></li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg><span>טופס השארת פרטים פשוט וברור</span></li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg><span>סבב דיוקים אישי לפני העלייה לאוויר</span></li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg><span>חיבור לדומיין האישי שלך<small>(עלות רכישת דומיין כ-70 ₪ לשנה ישירות מול הרשם)</small></span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg><span>חיבור לדומיין האישי שלך<small>(רכישת הדומיין בתשלום שנתי נמוך, ישירות מול הרשם)</small></span></li>
           </ul>
-          <a class="btn btn--terra" href="#contact">אני רוצה לשריין מקום במחיר השקה</a>
+          <a class="btn btn--terra" href="#contact">אני רוצה לשריין מקום בהשקה</a>
         </div>
       </div>
     </div>
@@ -480,9 +544,24 @@ a{color:inherit}
         </div>
         <div class="faq-item">
           <button class="faq-q" id="q4" aria-expanded="false" aria-controls="a4">האם יש עלויות חודשיות שוטפות?<span class="plus" aria-hidden="true"></span></button>
-          <div class="faq-a" id="a4" role="region" aria-labelledby="q4"><div><p>התשלום על בניית הדף הוא חד-פעמי (890 ₪ במחיר ההשקה). העלות החיצונית היחידה היא רכישת שם דומיין אישי (כ-70 ₪ לשנה ישירות מול ספק הדומיינים).</p></div></div>
+          <div class="faq-a" id="a4" role="region" aria-labelledby="q4"><div><p>התשלום על בניית הדף הוא חד-פעמי. העלות החיצונית היחידה היא רכישת שם דומיין אישי, בתשלום שנתי נמוך ישירות מול ספק הדומיינים.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" id="q5" aria-expanded="false" aria-controls="a5">איך עובד שובר המתנה?<span class="plus" aria-hidden="true"></span></button>
+          <div class="faq-a" id="a5" role="region" aria-labelledby="q5"><div><p>קונים שובר ומעניקים אותו למטפלת. היא פונה אליי, ממלאת שאלון קצר ומחליטה: כרטיס ביקור דיגיטלי ללא תוספת תשלום, או שדרוג לחבילה המלאה עם תשלום ההפרש בלבד. ככה הדף משקף אותה בדיוק, ולא את מה שניחשנו בשבילה.</p></div></div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Explore questionnaire -->
+  <section class="band explore" id="explore">
+    <div class="wrap explore-card reveal">
+      <span class="eyebrow">עוד לפני שמחליטים</span>
+      <h2>מה מייחד את הטיפול שלך?</h2>
+      <p>לפעמים דווקא מה שנראה לנו מובן מאליו בעבודה שלנו הוא בדיוק מה שמטופלים מחפשים. הכנתי כמה שאלות שעוזרות לעצור לרגע ולהסתכל על הטיפול שלך מהצד: מאיפה זה מגיע, איך זה נראה בחדר, ומה אחרים פוגשים כשהם מגיעים אלייך. אם תרצי לשתף אותי בתשובות, אחזור אלייך עם סיכום קצר של הגישה שלך ומה שמייחד אותך.</p>
+      <a class="btn btn--primary" href="/explore">לשאלות ההתבוננות</a>
+      <small>בלי התחייבות · כרבע שעה · אפשר לעצור ולחזור</small>
     </div>
   </section>
 
@@ -539,6 +618,11 @@ a{color:inherit}
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.86 9.86 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.23 8.23 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.24 8.24 0 0 1 8.24 8.25c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29Z"/></svg>
 </a>
 
+<div class="cta-bar" id="ctaBar" aria-hidden="true">
+  <a class="cta-bar-main" href="#contact" tabindex="-1">לשיחת היכרות קצרה</a>
+  <a class="cta-bar-wa js-wa" href="#" target="_blank" rel="noopener" tabindex="-1" aria-label="שליחת הודעה בוואטסאפ"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.86 9.86 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.23 8.23 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.24 8.24 0 0 1 8.24 8.25c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29Z"/></svg></a>
+</div>
+
 <script>
 /* ===== הגדרות – להחליף לפני העלייה לאוויר ===== */
 const WHATSAPP_NUMBER = "972527732544"; // המספר שלך בפורמט בינלאומי, בלי + ובלי 0 בהתחלה
@@ -578,14 +662,70 @@ document.querySelectorAll(".faq-q").forEach(btn => {
   });
 });
 
-// gentle reveal: only elements below the fold start hidden
-if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+// motion (learned from sarabramson.com): word-rise headlines, staggered reveal, timed mobile bar
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const splitWords = h => {
+  let i = 0;
+  const walk = node => [...node.childNodes].forEach(n => {
+    if (n.nodeType === 3) {
+      const frag = document.createDocumentFragment();
+      n.textContent.split(/(\s+)/).forEach(part => {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { frag.append(part); return; }
+        const w = document.createElement("span"); w.className = "w";
+        const s = document.createElement("span"); s.textContent = part; s.style.setProperty("--wi", i++);
+        w.append(s); frag.append(w);
+      });
+      n.replaceWith(frag);
+    } else if (n.nodeType === 1) walk(n);
+  });
+  h.setAttribute("aria-label", h.textContent.trim());
+  walk(h);
+  h.classList.add("split");
+};
+const play = h => { h.classList.remove("down"); };
+document.querySelectorAll(".cards,.works,.about,.contact").forEach(g => g.querySelectorAll(":scope > .reveal").forEach((el, k) => el.style.setProperty("--i", k)));
+if (!reduced) {
+  const heroH1 = document.querySelector(".hero h1");
+  if (heroH1) {
+    splitWords(heroH1); heroH1.classList.add("down");
+    requestAnimationFrame(() => requestAnimationFrame(() => play(heroH1)));
+    setTimeout(() => play(heroH1), 1200);
+  }
+}
+
+// gentle reveal: only elements below the fold start hidden; anything already passed (jump links) shows at once
+if ("IntersectionObserver" in window && !reduced) {
   const io = new IntersectionObserver(entries => entries.forEach(en => {
-    if (en.isIntersecting) { en.target.classList.remove("pending"); io.unobserve(en.target); }
+    if (en.isIntersecting || en.boundingClientRect.top < 0) {
+      en.target.classList.remove("pending"); io.unobserve(en.target);
+      en.target.querySelectorAll(".split.down").forEach(h => setTimeout(() => play(h), 140 * Math.max(1, Number(getComputedStyle(en.target).getPropertyValue("--i")) || 1)));
+    }
   }), {rootMargin:"0px 0px -8% 0px"});
   document.querySelectorAll(".reveal").forEach(el => {
-    if (el.getBoundingClientRect().top > innerHeight) { el.classList.add("pending"); io.observe(el); }
+    if (el.getBoundingClientRect().top > innerHeight) {
+      el.classList.add("pending");
+      el.querySelectorAll("h2").forEach(h => { splitWords(h); h.classList.add("down"); });
+      io.observe(el);
+    }
   });
+}
+
+// mobile bar
+const bar = document.getElementById("ctaBar"), whyEl = document.getElementById("why"), contactEl = document.getElementById("contact");
+if (bar && whyEl && contactEl) {
+  let ticking = false, shown = null;
+  const frame = () => {
+    ticking = false;
+    const vh = innerHeight;
+    const on = whyEl.getBoundingClientRect().top < vh * .45 && contactEl.getBoundingClientRect().top > vh * .9 && !document.body.classList.contains("menu-open");
+    if (on === shown) return; shown = on;
+    bar.classList.toggle("on", on);
+    bar.setAttribute("aria-hidden", String(!on));
+    bar.querySelectorAll("a").forEach(a => on ? a.removeAttribute("tabindex") : a.setAttribute("tabindex", "-1"));
+  };
+  addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }, {passive:true});
+  addEventListener("resize", frame); frame();
 }
 
 // lead form
